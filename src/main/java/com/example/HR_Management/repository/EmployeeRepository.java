@@ -10,4 +10,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 // Automatically exposes CRUD endpoints at /api/v1/employees
 @RepositoryRestResource(collectionResourceRel = "employees", path = "employees")
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+	long countByDepartment_Location_Id(Long locationId);
 }
