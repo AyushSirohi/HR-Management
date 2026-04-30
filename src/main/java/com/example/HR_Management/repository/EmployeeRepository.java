@@ -9,6 +9,7 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "employees", path = "employees")
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+	long countByDepartment_Location_Id(Long locationId);
 
 
     List<Employee> findBySubordinatesIsNotEmpty();
