@@ -4,6 +4,7 @@ import com.example.HR_Management.entity.Employee;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -128,6 +129,16 @@ public interface EmployeeRepository extends JpaRepository<Employee, BigDecimal> 
     @Override
     @RestResource(exported = false)
     void deleteAll();
+    
+    
+    @EntityGraph(
+    	    value = "Employee.withDepartmentLocationCountry",
+    	    type = EntityGraph.EntityGraphType.FETCH
+    	)
+    	List<Employee> findByDepartment_Location_Country_CountryId(String countryId);
 
+    	// Count query — no entity graph needed here because no associations
+    	// are traversed in the result, only in the WHERE clause filter.
+    	long countByDepartment_Location_Country_CountryId(String countryId);
 	
 }

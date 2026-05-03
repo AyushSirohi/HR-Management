@@ -7,7 +7,34 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-
+@NamedEntityGraph(
+	    name = "Employee.withDepartmentLocationCountry",
+	    attributeNodes = {
+	        // Eagerly fetch the 'department' association,
+	        // and follow into the 'dept-location' subgraph from there
+	        @NamedAttributeNode(value = "department", subgraph = "dept-location"),
+	        // Also eagerly fetch the employee's own 'job' (for job title on the detail page)
+	        @NamedAttributeNode(value = "job")
+	    },
+	    subgraphs = {
+	        @NamedSubgraph(
+	            name = "dept-location",
+	            // Inside Department, eagerly fetch 'location',
+	            // and follow into the 'loc-country' subgraph from there
+	            attributeNodes = {
+	                @NamedAttributeNode(value = "location", subgraph = "loc-country")
+	            }
+	        ),
+	        @NamedSubgraph(
+	            name = "loc-country",
+	            // Inside Location, eagerly fetch 'country'
+	            // This is the final hop — no further subgraph needed
+	            attributeNodes = {
+	                @NamedAttributeNode(value = "country")
+	            }
+	        )
+	    }
+	)
 @Entity
 @Table(name = "employees")
 public class Employee {
