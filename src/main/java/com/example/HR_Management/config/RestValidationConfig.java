@@ -7,6 +7,8 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
+import com.example.HR_Management.entity.Country;
+
 @Configuration
 public class RestValidationConfig implements RepositoryRestConfigurer {
 
@@ -28,5 +30,8 @@ public class RestValidationConfig implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration(
             RepositoryRestConfiguration config, CorsRegistry cors) {
+    	config.exposeIdsFor(Country.class);
+    	config.getProjectionConfiguration()
+        .addProjection(com.example.HR_Management.projection.CountryProjection.class);
     }
 }

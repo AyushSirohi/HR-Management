@@ -131,14 +131,16 @@ public interface EmployeeRepository extends JpaRepository<Employee, BigDecimal> 
     void deleteAll();
     
     
+    
+    
+    
     @EntityGraph(
     	    value = "Employee.withDepartmentLocationCountry",
     	    type = EntityGraph.EntityGraphType.FETCH
     	)
     	List<Employee> findByDepartment_Location_Country_CountryId(String countryId);
 
-    	// Count query — no entity graph needed here because no associations
-    	// are traversed in the result, only in the WHERE clause filter.
+    	
     	long countByDepartment_Location_Country_CountryId(String countryId);
 	
 }
