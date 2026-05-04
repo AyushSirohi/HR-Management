@@ -31,5 +31,7 @@ public class RestValidationConfig implements RepositoryRestConfigurer {
     public void configureRepositoryRestConfiguration(
             RepositoryRestConfiguration config, CorsRegistry cors) {
     	config.exposeIdsFor(Country.class);
+    	config.getProjectionConfiguration()
+        .addProjection(com.example.HR_Management.projection.CountryProjection.class);
     }
 }
