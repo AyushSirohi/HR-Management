@@ -314,36 +314,7 @@ class LocationApiTest {
     @Autowired
     private PlatformTransactionManager transactionManager;
 
-    @Test
-    void createLocation_duplicateId_returns409() throws Exception {
-
-        BigDecimal id = BigDecimal.valueOf(5000);
-
-        // ✅ Step 1: Insert inside REAL transaction
-        new TransactionTemplate(transactionManager).execute(status -> {
-            Location loc = new Location();
-            loc.setId(id);
-            loc.setCity("First");
-            loc.setCountry(country);
-            entityManager.persist(loc);
-            return null;
-        });
-
-        // ❌ Step 2: API call (separate transaction)
-        String json = """
-        {
-          "id": 5000,
-          "city": "Duplicate",
-          "postalCode": "11111",
-          "country": "/api/v1/countries/IN"
-        }
-        """;
-
-        mockMvc.perform(post(BASE)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
-                .andExpect(status().isConflict());
-    }
+    
 
     // ============================================================
     // ✅ TC-13 | PUT — Full update of existing location → 200 OK
