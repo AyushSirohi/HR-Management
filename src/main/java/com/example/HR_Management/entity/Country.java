@@ -26,7 +26,7 @@ public class Country {
     @NotBlank(message = "country_name must not be blank")
     private String countryName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "region_id", nullable = false)
     private Region region;
 
