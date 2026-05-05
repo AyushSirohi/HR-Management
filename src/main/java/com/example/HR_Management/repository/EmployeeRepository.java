@@ -142,5 +142,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, BigDecimal> 
 
     	
     	long countByDepartment_Location_Country_CountryId(String countryId);
+    	
+    	@RestResource(path = "byJob", rel = "byJob")
+    	Page<Employee> findByJob_JobId(@Param("jobId") String jobId, Pageable pageable);
 	
 }
